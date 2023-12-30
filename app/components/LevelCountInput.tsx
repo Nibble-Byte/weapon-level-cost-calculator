@@ -1,18 +1,18 @@
 import { Add, Remove } from '@mui/icons-material';
-import { Box, Grid, IconButton, Typography } from '@mui/material';
+import { Box, Grid, IconButton, TextField, Typography } from '@mui/material';
 
-export default function LevelCountInput({
-  value,
-  level,
-  handleChange
-}: {
+interface Props {
   value: number;
   level: number;
   handleChange: (val: number, level: number) => void;
-}) {
+}
+
+export default function LevelCountInput({ value, level, handleChange }: Props) {
   return (
     <Grid item xs={2}>
-      <small style={{ paddingTop: '1rem' }}>Level {level}</small>
+      <Typography fontSize={10} color={'gray'}>
+        Level {level}
+      </Typography>
       <Box
         sx={{
           display: 'flex',
@@ -26,7 +26,13 @@ export default function LevelCountInput({
         <IconButton onClick={() => handleChange(value - 1, level)}>
           <Remove />
         </IconButton>
-        <Typography>{value}</Typography>
+        <TextField
+          type="number"
+          sx={{ border: 'none' }}
+          inputProps={{ min: 0, style: { padding: 0, textAlign: 'center' } }}
+          value={value}
+          onChange={(e) => handleChange(+e.target.value, level)}
+        />
         <IconButton onClick={() => handleChange(value + 1, level)}>
           <Add />
         </IconButton>
